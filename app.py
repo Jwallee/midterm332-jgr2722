@@ -1,3 +1,5 @@
+#jgr2722
+
 #!/usr/bin/python
 import json
 import xmltodict
@@ -43,7 +45,7 @@ def hello_world():
     return (string):
         Returns instructions on how to run the flask app properly.
     """
-    return """\nProgram sucessessfully ran, but no input route was selected.\n
+    return """\nProgram successfully ran, but no input route was selected.\n
 This program contains two data sets, one that depicts where the International Space Station is located around the world, and data of the ISS being visible in a certain region of the United States.\n\n
 To access this information, follow the steps below:\n
 
@@ -78,7 +80,7 @@ def epochs():
             a=a+1
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return eDict
 
 @app.route('/epochs/<epoch>', methods=['GET'])
@@ -100,7 +102,7 @@ def epochData(epoch):
         fDict={i.get('EPOCH'): Ldicts}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return fDict
 
 @app.route('/countries', methods=['GET'])
@@ -124,7 +126,7 @@ def countries():
         fDict={"Countries": LdictF}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 @app.route('/country/<country>', methods=['GET'])
@@ -145,7 +147,7 @@ def countryData(country):
         fDict={"%s Data"%(country): Ldicts}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 @app.route('/country/<country>/regions', methods=['GET'])
@@ -169,7 +171,7 @@ def countryRegion(country):
         fDict={"%s Regions"%(country): LdictF}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 @app.route('/country/<country>/regions/<region>', methods=['GET'])
@@ -192,7 +194,7 @@ def countryRegionData(country, region):
         fDict={"%s %s Data" % (country,region): Ldicts}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 @app.route('/country/<country>/regions/<region>/cities', methods=['GET'])
@@ -217,7 +219,7 @@ def countryRegionCity(country, region):
         fDict={"%s %s Cities" % (country,region): LdictsF}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 @app.route('/country/<country>/regions/<region>/cities/<city>', methods=['GET'])
@@ -240,7 +242,7 @@ def countryRegionCityData(country, region, city):
         fDict={"%s %s %s Data" % (country,region,city): Ldicts}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 
 

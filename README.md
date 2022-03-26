@@ -2,14 +2,14 @@ jgr2722
 # **Global Positioning Analysis and Flask Programming**
 
 ## **Purpose**
-For this problem, we need to analyze iss data from a xml file and analyze it within a flask web application. Additionally, the entire contents of the program was containerized into a *Docker* image, allowing the program to be run from a terminal window, and a *Makefile* was also created to both create the flask program and run the web application. These challenges are useful skills to learn, because it gets us familiar with using the Docker imaging system, analyzing larger/different types of data sets and familiarizes us with flask web applications.
+For this problem, we need to analyze ISS data from a xml file and analyze it within a flask web application. Additionally, the entire contents of the program was containerized into a *Docker* image, allowing the program to be run from a terminal window, and a *Makefile* was also created to both create the flask program and run the web application. These challenges are useful skills to learn, because it gets us familiar with using the Docker imaging system, analyzing larger/different types of data sets and familiarizes us with flask web applications.
 
 ## **Repository Contents**
-In this repository, *(midterm332-JGR2722)*, one program, two .xml data files, a Dockerfile and a Makefile are included along with this README file. The program, **app.py**, is used to create the flask server and analyze the .xml data. The server is initialized, and users can ask for specific data sets, such as the countries in the data set, cities, positioning data and others. These functions use the two data sets present in the repository, **ISS.OEM_J2K_EPH.xml** and **XMLsightingData_citiesUSA02.xml**. The *ISS* file contains the time and location of the International Space Station, and the *Sighting Data* file contains data of sighings in a certain region of the United States. This data was collected by 
+In this repository, *(midterm332-JGR2722)*, one program, two .xml data files, a Dockerfile and a Makefile are included along with this README file. The program, **app.py**, is used to create the flask server and analyze the .xml data. The server is initialized, and users can ask for specific data sets, such as the countries in the data set, cities, positioning data and others. These functions use the two data sets, **ISS.OEM_J2K_EPH.xml** and **XMLsightingData_citiesUSA02.xml**. The *ISS* file contains the time and location of the International Space Station, and the *Sighting Data* file contains data of sightings in a certain region of the United States. (Documentation at the end)
 
-The data can be downloaded [here](https://data.nasa.gov/Space-Science/ISS_COORDS_2022-02-13/r6u8-bhhq)(under Public Distribution File and the desired XML file), and the data sets were then copied into this repository. This data is then saved to global variables *iss* and *sightings* in the flask *app.py* program using a **POST** function, */download-data*. After runnning this route, all other **GET** functions can be accessed by the routes described in the default **/** route. Some function examples are **/epochs**,**/countries**,**/epochs/(epoch)**,**/country/(country)/regions/(region)/cities/(city)**, etc. (These functions will be explored below)
+The data can be downloaded [here](https://data.nasa.gov/Space-Science/ISS_COORDS_2022-02-13/r6u8-bhhq)(under Public Distribution File and the desired XML file), and the data sets were then copied into this repository. This data is then saved to global variables *iss* and *sightings* in the flask *app.py* program using a **POST** function, */download-data*. After running this route, all other **GET** functions can be accessed by the routes described in the default **/** route. Some function examples are **/epochs**,**/countries**,**/epochs/(epoch)**,**/country/(country)/regions/(region)/cities/(city)**, etc. (These functions will be explored below)
 
- After the program was completed, the neccesary files and programs were contanerized in a *Docker* image for easy distribution, and a *Makefile* was created to build this image and run all the neccesary code to initialize the flask server.
+ After the program was completed, the necessary files and programs were containerized in a *Docker* image for easy distribution, and a *Makefile* was created to build this image and run all the necessary code to initialize the flask server.
 
 ## **Running the files**
 
@@ -17,7 +17,9 @@ Once you are in the correct repository, the first step is to run the **Makefile*
 ```ruby
 make all
 ```
-This runs the path **all** in the make file, which includes *build and run*. **Remember to include your own docker name in the make file, so that the docker container is created under your own username.**
+This runs the path **all** in the make file, which includes *build and run*. 
+
+**Remember to include your own docker name in the Makefile, so that the docker container is created under your own username.**
 
 **[For reference, ${NAME} means that your own docker username is used for the command. This should be done automatically if you replaced the NAME variable with your docker username.]**
 
@@ -43,7 +45,7 @@ docker run --name "ISS-Data-Analysis" -d -p 5023:5000 jwallee/app:1.0
 15a5d94b9f9111a0e18aa7c584e73b49033a4743f99a285686b3c61eb2198683
 ```
 
-With the flask server active within the docker image, all it takes it to access the functions present in the file using a *curl* function. The first step would be to go to the terminal and run:
+With the flask server active within the docker image, all it takes is to access the functions present in the file using a *curl* function. The first step would be to go to the terminal and run:
 ```ruby
 curl localhost:5023/
 ```
@@ -51,7 +53,7 @@ This command returns a long string detailing what functions can be used and what
 
 **Example output:**
 ```
-Program sucessessfully ran, but no input route was selected.
+Program succesfully ran, but no input route was selected.
 
 This program contains two data sets, one that depicts where the International Space Station is located around the world, and data of the ISS being visible in a certain region of the United States.
 
@@ -69,7 +71,7 @@ To access this information, follow the steps below:
 ...etc.
 ```
 ## **Initialization**
-As the instructions say, the first command that **must** be ran is what loads the data into the flask program. Try it now:
+As the instructions say, the first command that **must** be run is what loads the data into the flask program. Try it now:
 
 **Command:**
 ```ruby
@@ -81,7 +83,7 @@ curl localhost:5023/download-data -X POST
 Data Successfully Downloaded
 ```
 
-If the output matches the one seen above, that means that the data was successfuly loaded into the flask app! Now you can choose what data you would like to access from the routes listed before.
+If the output matches the one seen above, that means that the data was successfully loaded into the flask app! Now you can choose what data you would like to access from the routes listed before.
 
 ## **Functions/Routes**
 
@@ -109,7 +111,7 @@ def epochs():
             a=a+1
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return eDict
 ```
 As the function description says, this route goes through every dictionary in **iss_data** and adds all *EPOCH* values to a dictionary. This dictionary is returned to the terminal.
@@ -154,17 +156,18 @@ def countryRegionCityData(country, region, city):
         fDict={"%s %s %s Data" % (country,region,city): Ldicts}
     except NameError as a:
         logging.error(a)
-        return("Data veriables not defined\n")
+        return("Data variables not defined\n")
     return (fDict)
 ```
-As this function description says, it finds all city data within a specified country, region and city. It creates a dictionary with all of the found data and retuns this list of dictionaries to the terminal.
+As this function description says, it finds all city data within a specified country, region and city. It creates a dictionary with all of the found data and returns this list of dictionaries to the terminal.
+
 **Example Input**
 ```ruby
 curl localhost:5023/country/United_States/regions/Florida/cities/New_Smyrna_Beach
 ```
 **Example Output**
 ```
-    ..., 
+    ... 
     {
       "Duration(minutes)": "2", 
       "Entering Location": "10 above NW", 
@@ -197,7 +200,7 @@ docker logs ISS-Data-Analysis
 ```
 
 ## **Manually Setting up the Dockerfile**
-In order to easily run this program on any system, a *Dockerfile* was set up to contanerize this program. This process was streamlined via the **Makefile**, but outlined below is how to manually run the dockerfile. First, the file **Dockerfile** was set up to load all needed files, inputs and libraries needed to run the program. The dockerfile was set up like this:
+In order to easily run this program on any system, a *Dockerfile* was set up to containerize this program. This process was streamlined via the **Makefile**, but outlined below is how to manually run the dockerfile. First, the file **Dockerfile** was set up to load all needed files, inputs and libraries needed to run the program. The dockerfile was set up like this:
 ```ruby
 FROM python:3
 
@@ -235,13 +238,13 @@ This command executes all of the initialization statements in the *Dockerfile* a
 
 ## **Pulling the Dockerfile Image**
 
-In order to run the *Dockerfile*, first the dockerfile image must be pulled from the Dockerfile Hub. This can be achieved by entering the command:
+In order to run the *Dockerfile*, the dockerfile image must first be pulled from the Dockerfile Hub. This can be achieved by entering the command:
 ```ruby
 docker pull ${NAME}/app:1.0
 ```
-This pulls the image you just created from the DOcker Hub and downloads it to your local device.
+This pulls the image you just created from the Docker Hub and downloads it to your local device.
 
-You can also downloade a **pre-containerized image** created by myself by running the command:
+You can also download a **pre-containerized image** created by myself by running the command:
 ```ruby
 docker pull jwallee/app:1.0
 ```
